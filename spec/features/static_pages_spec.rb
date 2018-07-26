@@ -1,30 +1,29 @@
 require 'rails_helper'
 
 RSpec.feature "StaticPages", type: :feature do
-  feature '#home' do
-    scenario '#home not have page title' do
-      visit root_path
-      expect(page).to_not have_title 'Home | '
-    end
-
-    scenario '#home have full_title only' do
-      visit root_path
-      expect(page).to have_title 'Ruby on Rails Tutorial Sample App'
-    end
+  scenario '#home' do
+    visit root_path
+    expect(page).to_not have_title 'Home | '
+    expect(page).to have_title 'Ruby on Rails Tutorial Sample App'
+    expect(page).to have_link 'sample app', href: root_path
+    expect(page).to have_link 'Home', href: root_path
+    expect(page).to have_link 'Help', href: help_path
+    expect(page).to have_link 'About', href: about_path
+    expect(page).to have_link 'Contact', href: contact_path
   end
 
-  scenario '#help have title' do
-    visit static_pages_help_path
-    expect(page).to have_title 'Help'
+  scenario '#help' do
+    visit help_path
+    expect(page).to have_title 'Help | Ruby on Rails Tutorial Sample App'
   end
 
-  scenario '#about have title' do
-    visit static_pages_about_path
-    expect(page).to have_title 'About'
+  scenario '#about' do
+    visit about_path
+    expect(page).to have_title 'About | Ruby on Rails Tutorial Sample App'
   end
 
-  scenario '#contact have title' do
-    visit 'static_pages/contact'
-    expect(page).to have_title 'Contact'
+  scenario '#contact' do
+    visit contact_path
+    expect(page).to have_title 'Contact | Ruby on Rails Tutorial Sample App'
   end
 end

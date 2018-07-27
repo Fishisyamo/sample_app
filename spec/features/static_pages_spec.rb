@@ -10,6 +10,7 @@ RSpec.feature "StaticPages", type: :feature do
     expect(page).to have_link 'Help', href: help_path
     expect(page).to have_link 'About', href: about_path
     expect(page).to have_link 'Contact', href: contact_path
+    expect(page).to have_link 'Sign up now!', href: signup_path
   end
 
   scenario '#help' do

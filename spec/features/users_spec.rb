@@ -20,15 +20,18 @@ RSpec.feature "Users", type: :feature do
     end
 
     scenario 'valid submit' do
-      fill_in 'Name', with: 'valid user'
-      fill_in 'Email', with: 'valid@example.com'
-      fill_in 'Password', with: 'password'
-      fill_in 'Confirmation', with: 'password'
+      user = FactoryBot.build(:user)
+      fill_in 'Name', with: user.name
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      fill_in 'Confirmation', with: user.password
       click_button 'Create my account'
+      create_user = User.find_by(email: user.email)
 
-      expect(page).to have_current_path '/users/1'
+      expect(page).to have_current_path user_path(create_user)
       expect(page).to have_css 'div.alert-success'
       expect(page).to have_content 'Welcome to the Sample App!'
+      expect(page).to have_link 'Log out', href: logout_path
     end
   end
 end

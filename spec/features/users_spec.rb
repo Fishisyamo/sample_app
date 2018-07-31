@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Users", type: :feature do
-  context '#signup' do
+  context '#signup features' do
     before do
       visit signup_path
     end

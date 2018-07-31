@@ -91,4 +91,11 @@ RSpec.describe User, type: :model do
       expect(user).to be_invalid
     end
   end
+
+  context 'self.authenticated?' do
+    it 'should return for a user with nil digest' do
+      user = FactoryBot.build(:user)
+      expect(user.authenticated?('')).to be_falsey
+    end
+  end
 end

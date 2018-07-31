@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Sessions", type: :feature do
-  context '#login' do
+  context '#login features' do
     scenario 'have title' do
       visit login_path
       expect(page).to have_title 'Log in | Ruby on Rails Tutorial Sample App'
@@ -34,7 +34,7 @@ RSpec.feature "Sessions", type: :feature do
     end
   end
 
-  context '#logout' do
+  context '#logout features' do
     scenario 'logout success' do
       user = FactoryBot.create(:user)
       visit login_path

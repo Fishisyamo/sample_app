@@ -14,6 +14,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
+gem 'faker'
+gem 'will_paginate', '3.1.6'
+gem 'bootstrap-will_paginate', '1.0.0'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.6.0'
@@ -31,22 +34,23 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'faker', require: false # for sample data in development
+  # gem 'faker', require: false # for sample data in development
   gem 'spring-commands-rspec'
 end
 
 group :test do
   gem 'selenium-webdriver'
   gem 'capybara', '~> 2.15.4'
-# 	gem 'chromedriver-helper'
-# 	# Or use poltergeist and PhantomJS as an alternative to Selenium/Chrome
-# 	# gem 'poltergeist', '~> 1.15.0'
-# 	gem 'launchy', '~> 2.4.3'
-# 	gem 'shoulda-matchers',
-# 	    git: 'https://github.com/thoughtbot/shoulda-matchers.git',
-# 	    branch: 'rails-5'
-# 	gem 'vcr'
-# 	gem 'webmock'
+  gem 'capybara-webkit', '~> 1.15.0'
+    # gem 'chromedriver-helper'
+    # Or use poltergeist and PhantomJS as an alternative to Selenium/Chrome
+    # gem 'poltergeist', '~> 1.15.0'
+    # gem 'launchy', '~> 2.4.3'
+    # gem 'shoulda-matchers',
+    #     git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+    #     branch: 'rails-5'
+    # gem 'vcr'
+    # gem 'webmock'
 end
 
 group :production do

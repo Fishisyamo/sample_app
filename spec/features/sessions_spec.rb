@@ -14,7 +14,7 @@ RSpec.feature "Sessions", type: :feature do
       fill_in 'Password', with: ''
       click_button 'Log in'
 
-      expect(page).to have_current_path '/login'
+      expect(current_path).to eq login_path
       expect(page).to have_css 'div.alert-danger'
       visit login_path
       expect(page).to have_no_css 'div.alert-danger'
@@ -22,12 +22,9 @@ RSpec.feature "Sessions", type: :feature do
 
     scenario 'valid submit' do
       user = FactoryBot.create(:user)
-      visit login_path
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_button 'Log in'
+      log_in_as(user)
 
-      expect(page).to have_current_path user_path(user)
+      expect(current_path).to eq user_path(user)
       expect(page).to have_no_link 'Log in', href: login_path
       expect(page).to have_link 'Log out', href: logout_path
       expect(page).to have_link 'Profile', href: user_path(user)
@@ -37,13 +34,10 @@ RSpec.feature "Sessions", type: :feature do
   context '#logout features' do
     scenario 'logout success' do
       user = FactoryBot.create(:user)
-      visit login_path
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      click_button 'Log in'
+      log_in_as(user)
       click_link 'Log out'
 
-      expect(page).to have_current_path root_path
+      expect(current_path).to eq root_path
       expect(page).to have_no_link 'Log out', href: logout_path
       expect(page).to have_no_link 'Profile', href: user_path(user)
     end

@@ -10,10 +10,13 @@ Rails.application.routes.draw do
   post '/signup', to: 'users#create'
   patch '/users/:id/edit', to: 'users#update'
   put '/users/:id/edit', to: 'users#update'
-  resources :users
+  resources :users, only: [:index, :show, :edit, :destroy]
 
   # sessions
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+
+  # account_activations
+  resources :account_activations, only: [:edit]
 end

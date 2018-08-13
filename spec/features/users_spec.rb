@@ -19,19 +19,29 @@ RSpec.feature "Users", type: :feature do
       expect(page).to have_selector 'div#error_explanation ul li'
     end
 
-    scenario 'when valid submit' do
-      user = FactoryBot.build(:user)
-      fill_in 'Name', with: user.name
-      fill_in 'Email', with: user.email
-      fill_in 'Password', with: user.password
-      fill_in 'Confirmation', with: user.password
-      click_button 'Create my account'
-      create_user = User.find_by(email: user.email)
+    context 'when valid submit' do
+      include ActionMailer::TestHelper
+      after do
+        ActionMailer::Base.deliveries.clear
+      end
 
-      expect(current_path).to eq user_path(create_user)
-      expect(page).to have_css 'div.alert-success'
-      expect(page).to have_content 'Welcome to the Sample App!'
-      expect(page).to have_link 'Log out', href: logout_path
+      scenario 'send an account activation mail after create account' do
+        perform_enqueued_jobs do
+          expect {
+            fill_in 'Name', with: 'Test User'
+            fill_in 'Email', with: 'example@test.com'
+            fill_in 'Password', with: 'password'
+            fill_in 'Confirmation', with: 'password'
+            click_button 'Create my account'
+          }.to change(User, :count).by(1)
+
+          expect(current_path).to eq root_path
+          expect(page).to have_css 'div.alert-info'
+          expect(page).to have_content 'Please check your email to activate your account.'
+          expect(page).to have_link 'Log in', href: login_path
+          expect(ActionMailer::Base.deliveries.size).to eq 1
+        end
+      end
     end
   end
 
@@ -126,7 +136,7 @@ RSpec.feature "Users", type: :feature do
     end
   end
 
-  feature 'destroy feature', js: true do
+  feature '#destroy feature', js: true do
     context 'login as admin and delete other user account' do
       background do
         user        = FactoryBot.create(:user, admin: true)

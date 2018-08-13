@@ -95,7 +95,7 @@ RSpec.describe User, type: :model do
   context 'self.authenticated?' do
     it 'should return for a user with nil digest' do
       user = FactoryBot.build(:user)
-      expect(user.authenticated?('')).to be_falsey
+      expect(user.authenticated?(:remember, '')).to be_falsey
     end
   end
 end

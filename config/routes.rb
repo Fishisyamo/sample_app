@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
 
   # password_resets
-  # get '/password_resets', to: 'password_resets#new'
-  # patch '/password_resets/:id/edit', to: 'password_resets#update'
-  # put '/password_resets/:id/edit', to: 'password_resets#update'
   resources :password_resets, only: [:new, :create, :edit, :update]
+
+  # microposts
+  resources :microposts, only: [:create, :destroy]
 end

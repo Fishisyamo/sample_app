@@ -4,7 +4,7 @@ RSpec.feature "StaticPages", type: :feature do
   scenario '#home' do
     visit root_path
     expect(page).to_not have_title 'Home | '
-    expect(page).to have_title 'Ruby on Rails Tutorial Sample App'
+    expect(page).to have_title is_full_title
     expect(page).to have_link 'sample app', href: root_path
     expect(page).to have_link 'Home', href: root_path
     expect(page).to have_link 'Help', href: help_path
@@ -15,16 +15,16 @@ RSpec.feature "StaticPages", type: :feature do
 
   scenario '#help' do
     visit help_path
-    expect(page).to have_title 'Help | Ruby on Rails Tutorial Sample App'
+    expect(page).to have_title is_full_title('Help')
   end
 
   scenario '#about' do
     visit about_path
-    expect(page).to have_title 'About | Ruby on Rails Tutorial Sample App'
+    expect(page).to have_title is_full_title('About')
   end
 
   scenario '#contact' do
     visit contact_path
-    expect(page).to have_title 'Contact | Ruby on Rails Tutorial Sample App'
+    expect(page).to have_title is_full_title('Contact')
   end
 end

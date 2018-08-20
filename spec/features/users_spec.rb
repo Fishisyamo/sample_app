@@ -7,7 +7,7 @@ RSpec.feature "Users", type: :feature do
     end
 
     scenario 'have title' do
-      expect(page).to have_title 'Sign up | Ruby on Rails Tutorial Sample App'
+      expect(page).to have_title is_full_title('Sign up')
       expect(page).to have_content 'Sign up'
     end
 
@@ -53,7 +53,7 @@ RSpec.feature "Users", type: :feature do
       visit users_path
 
       expect(current_path).to eq users_path
-      expect(page).to have_selector 'div.pagination'
+      expect(page).to have_selector 'div.pagination', count: 2
       User.paginate(page: 1).each do |user|
         expect(page).to have_link user.name, href: user_path(user)
       end
@@ -181,6 +181,31 @@ RSpec.feature "Users", type: :feature do
 
         expect(page).to have_link other_user.name, href: user_path(other_user)
         expect(page).to have_no_link 'delete', href: user_path(other_user)
+      end
+    end
+  end
+
+  feature '#show feature' do
+    context 'profile display' do
+      let(:user) { FactoryBot.create(:user) }
+
+      scenario 'have title and gravatar img' do
+        log_in_as(user)
+        expect(current_path).to eq user_path(user)
+        expect(page).to have_title is_full_title(user.name)
+        expect(page).to have_selector 'h1', text: user.name
+        expect(page).to have_selector 'h1>img.gravatar'
+      end
+
+      scenario 'show microposts and pagination' do
+        31.times { FactoryBot.create(:micropost, :faker, user: user) }
+        log_in_as(user)
+
+        expect(page).to have_selector 'div.pagination', count: 1
+        expect(page).to have_content user.microposts.count.to_s
+        user.microposts.paginate(page: 1).each do |micropost|
+          expect(page).to have_content micropost.content
+        end
       end
     end
   end

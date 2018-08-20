@@ -15,6 +15,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'faker'
+gem 'carrierwave', '~> 1.2.2'
+gem 'mini_magick', '~> 4.7.0'
 gem 'will_paginate', '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
 
@@ -25,7 +27,7 @@ group :development, :test do
   gem 'pry-doc'
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
-  gem 'guard-rspec', require: false
+  # gem 'guard-rspec', require: false
   gem 'factory_bot_rails', '~> 4.10.0'
 end
 
@@ -34,7 +36,6 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  # gem 'faker', require: false # for sample data in development
   gem 'spring-commands-rspec'
 end
 
@@ -45,7 +46,7 @@ group :test do
     # gem 'chromedriver-helper'
     # Or use poltergeist and PhantomJS as an alternative to Selenium/Chrome
     # gem 'poltergeist', '~> 1.15.0'
-    # gem 'launchy', '~> 2.4.3'
+    gem 'launchy', '~> 2.4.3'
     # gem 'shoulda-matchers',
     #     git: 'https://github.com/thoughtbot/shoulda-matchers.git',
     #     branch: 'rails-5'
@@ -55,13 +56,12 @@ end
 
 group :production do
   gem 'pg'
+  gem 'fog', '1.42'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'jquery-rails'
-gem 'devise'
-gem 'paperclip'
 gem 'geocoder'
 

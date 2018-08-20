@@ -59,7 +59,7 @@ RSpec.describe User, type: :model do
 
     context 'address format' do
       it 'is valid' do
-        user = FactoryBot.build(:user)
+        user            = FactoryBot.build(:user)
         valid_addresses = %w[User@foo.COM THE_US-ER@foo.bar.org first.last@foo.jp]
         valid_addresses.each do |address|
           user.email = address
@@ -68,7 +68,7 @@ RSpec.describe User, type: :model do
       end
 
       it 'is invalid' do
-        user = FactoryBot.build(:user)
+        user              = FactoryBot.build(:user)
         invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.foo@bar_baz.com foo@bar+baz.com]
         invalid_addresses.each do |address|
           user.email = address
@@ -80,13 +80,13 @@ RSpec.describe User, type: :model do
 
   context 'password' do
     it 'is should be present (nonblank)' do
-      user = FactoryBot.build(:user)
+      user          = FactoryBot.build(:user)
       user.password = user.password_confirmation = ' ' * 6
       expect(user).to be_invalid
     end
 
     it 'is should have a minimum length' do
-      user = FactoryBot.build(:user)
+      user          = FactoryBot.build(:user)
       user.password = user.password_confirmation = 'a' * 5
       expect(user).to be_invalid
     end
@@ -96,6 +96,14 @@ RSpec.describe User, type: :model do
     it 'should return for a user with nil digest' do
       user = FactoryBot.build(:user)
       expect(user.authenticated?(:remember, '')).to be_falsey
+    end
+  end
+
+  context 'microposts' do
+    it 'associated microposts should be destroyed' do
+      user = FactoryBot.create(:user)
+      user.microposts.create(content: 'loren ipsum')
+      expect { user.destroy }.to change(Micropost, :count).by(-1)
     end
   end
 end

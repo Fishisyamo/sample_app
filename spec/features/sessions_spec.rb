@@ -4,7 +4,7 @@ RSpec.feature "Sessions", type: :feature do
   context '#login features' do
     scenario 'have title' do
       visit login_path
-      expect(page).to have_title 'Log in | Ruby on Rails Tutorial Sample App'
+      expect(page).to have_title is_full_title('Log in')
       expect(page).to have_content 'Log in'
     end
 

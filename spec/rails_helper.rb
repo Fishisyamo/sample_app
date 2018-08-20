@@ -107,4 +107,5 @@ RSpec.configure do |config|
 
   # Mailer
   # config.before { ActionMailer::Base.deliveries.clear }
+
 end
